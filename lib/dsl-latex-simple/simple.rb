@@ -8,12 +8,12 @@ module Dsl
         end
         
         def macro(name)
-          if name.length > 0
-            if name[0].is_a? Array
-              opt = name.shift
-              @out << "["+opt.join('][')+"]"
+          name.each do |n|
+            if n.is_a? Array
+              @out << "["+n.join('][')+"]"
+            else
+              @out << "{#{n}}"
             end
-            @out << "{"+name.join('}{')+"}"
           end
           @out << "\n"
         end
@@ -44,7 +44,14 @@ module Dsl
         
 
         def esc(s)
-          s.gsub!('\\','\\\\')
+          s.gsub!(%q{\\},%q{\\\\})
+          s
+        end
+
+        def trim(s)
+          s.gsub!(/^\s+/,'')
+          s.gsub!(/\s+$/,'')
+          s
         end
 
         def c(*x)

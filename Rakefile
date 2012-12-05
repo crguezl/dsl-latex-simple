@@ -14,6 +14,10 @@ task :dvi do
   sh "latex simple.tex"
 end
 
+task :html do
+  sh "latex2html simple"
+end
+
 task :clean do
   sh "rm -f *.log *.dvi *.aux"
 end

@@ -4,6 +4,8 @@ usepackage ["fleqn"], %q{amsmath}
 usepackage ["paper=a4paper,dvips,top=1.5cm,left=1.5cm,right=1.5cm,
     foot=1cm,bottom=1.5cm"], "geometry"
 
+newcommand %q{\lb}, %q{{\langle}}
+
 title "An elementary proof of the reconstruction conjecture"
 
 author do
@@ -52,4 +54,8 @@ file twice to get the counters correct.}
 
 htmladdnormallink %q{https://github.com/cocoa/eloquent-ruby}, %q{https://github.com/cocoa/eloquent-ruby}
 
+start %q{align} do c trim(%q{
+a & = b \\\\
+c &= d,})
+end
 end
