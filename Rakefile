@@ -1,5 +1,7 @@
 require "bundler/gem_tasks"
 
+LATEX2HTMLOPTIONS = '-html_version 4.0,latin1,unicode -contents_in_navigation -style mystyle.css -white -local_icons'
+
 task :default => :compile
 
 task :compile do
@@ -15,7 +17,7 @@ task :dvi do
 end
 
 task :html do
-  sh "latex2html simple"
+  sh "latex2html #$LATEX2HTMLOPTIONS simple"
 end
 
 task :clean do
