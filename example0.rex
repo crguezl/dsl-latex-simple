@@ -64,4 +64,10 @@ start "document" do
   start %q{rawhtml} do
     c Simplabs::Highlight.highlight(:ruby, 'class Test; end')
   end
+
+  start %q{latexonly} do
+    start :verbatim do
+      c 'class Test; end'
+    end
+  end
 end

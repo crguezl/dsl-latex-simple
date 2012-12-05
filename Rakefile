@@ -17,7 +17,7 @@ task :dvi do
 end
 
 task :html do
-  sh "latex2html #$LATEX2HTMLOPTIONS simple"
+  sh "latex2html #{LATEX2HTMLOPTIONS} simple"
 end
 
 task :clean do
