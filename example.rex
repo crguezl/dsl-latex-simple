@@ -39,4 +39,13 @@ start "document" do
     c esc '\Delta =\sum_{i=1}^N w_i (x_i - \bar{x})^2.'
   end
 
+c %q{We can give an equation a label so that we can refer to it later.}
+start %q{equation} do
+  label %q{eq:ising}
+  c %q{E = -J \sum_{i=1}^N s_i s_{i+1},}
+end
+c esc %q{Equation~\eqref{eq:ising} expresses the energy of a configuration
+of spins in the Ising model.\footnote{It is necessary to typeset a
+file twice to get the counters correct.}}
+
 end

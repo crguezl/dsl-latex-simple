@@ -5,6 +5,11 @@ task :default => :compile
 task :compile do
   sh "ruby -Ilib lib/dsl-latex-simple/simple.rb > simple.tex"
 end
+
+task :c0 do
+  sh "ruby -Ilib bin/rex example0.rex > simple.tex"
+end
+
 task :dvi do
   sh "latex simple.tex"
 end

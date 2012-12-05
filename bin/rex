@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'dsl-latex-simple'
+
+path = ARGV.shift
+
+if path and File.exists? path
+  Dsl::Latex::Simple.generate(path)
+else
+  puts "Usage:\n\t$0 file"
+end
