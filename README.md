@@ -1,6 +1,6 @@
 # Dsl::Latex::Simple
 
-TODO: Write a gem description
+TODO: LaTeX like Ruby DSL
 
 ## Installation
 
@@ -18,7 +18,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: 
+1. Now blocks are used only for environments.  A block can follow any latex command
 
 ## Contributing
 

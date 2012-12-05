@@ -1,9 +1,3 @@
 require "dsl-latex-simple/version"
+require "dsl-latex-simple/simple"
 
-module Dsl
-  module Latex
-    module Simple
-      # Your code goes here...
-    end
-  end
-end

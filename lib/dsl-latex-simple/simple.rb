@@ -1,57 +1,66 @@
 module Dsl
   module Latex
     class Simple
-        def initialize(out)
-          @out = out
+        attr_accessor :out
+
+        def initialize()
+          @out = ''
         end
         
-        def tag(tagname, name=nil)
+        def macro(name)
+          if name.length > 0
+            if name[0].is_a? Array
+              opt = name.shift
+              @out << "["+opt.join('][')+"]"
+            end
+            @out << "{"+name.join('}{')+"}"
+          end
+          @out << "\n"
+        end
+
+        def tag(tagname, *name, &block)
           if tagname == :start
             tagname = :begin
           end
           @out << "\\#{tagname}"
-          if name
-            @out << "\{#{name}\}"
-          end
-          @out << "\n"
+          @out << '{' if block_given? and tagname != :begin
+          macro(name)
           if block_given?
-            content = yield
+            # create a new object and translate it
+            # then concat its output
+            aux = Dsl::Latex::Simple.new
+            aux.instance_eval &block
+            content = aux.out
             if content
-              @out << content.to_s << "\n"
+              @out << content.to_s 
             end
-            @out << "\\end"
-            if name 
-              @out << "\{#{name}\}"
-            end
-            @out << "\n"
+            @out << ((tagname == :begin)? "\\end" : '}')
+            macro(name)
           end
           nil
         end
           
         alias method_missing tag
         
-        def self.generate(out, &block)
-          Dsl::Latex::Simple.new(out).instance_eval(&block)
+
+        def esc(s)
+          s.gsub!('\\','\\\\')
         end
 
         def c(*x)
           @out << x.join("\n")+"\n"
         end
+
+        def self.generate(path)
+          s = File.read(path)
+          x = Dsl::Latex::Simple.new 
+          x.instance_eval(s, path, 1)
+          puts x.out
+        end
     end
   end
 end
 if $0 == __FILE__
-  Dsl::Latex::Simple.generate(STDOUT) do
-    documentclass "article"
-    usepackage "amsmath"
-    title "\\LaTeX"
-    date ""
-    start "document" do
-      c "Hola, hoy son las #{Time.now} y $\\sqrt{2} = #{Math.sqrt(2)}$"
-      start "verbatim" do
-       "a = 4*5"
-      end
-  end
-end
+ Dsl::Latex::Simple.generate('example.rex')
 end
 

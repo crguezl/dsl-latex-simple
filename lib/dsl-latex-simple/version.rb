@@ -1,6 +1,6 @@
 module Dsl
   module Latex
-    module Simple
+    class Simple
       VERSION = "0.0.1"
     end
   end
