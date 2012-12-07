@@ -7,7 +7,9 @@ module Dsl
           @out = ''
         end
         
-        def macro(name)
+        def macro_begin(name, tagname, block)
+          @out << "\\#{tagname}"
+          @out << '{' if block and tagname != :begin
           name.each do |n|
             if n.is_a? Array
               @out << "["+n.join('][')+"]"
@@ -18,13 +20,27 @@ module Dsl
           @out << "\n"
         end
 
+        def macro_end(name, tagname)
+          if tagname == :begin
+            @out << "\\end{#{name[0]}}" 
+          else
+            @out << '}'
+            name.each do |n|
+              if n.is_a? Array
+                @out << "["+n.join('][')+"]"
+              else
+                @out << "{#{n}}"
+              end
+            end
+          end
+          @out << "\n"
+        end
+
         def tag(tagname, *name, &block)
           if tagname == :start
             tagname = :begin
           end
-          @out << "\\#{tagname}"
-          @out << '{' if block_given? and tagname != :begin
-          macro(name)
+          macro_begin(name, tagname, block_given?)
           if block_given?
             # create a new object and translate it
             # then concat its output
@@ -34,14 +50,12 @@ module Dsl
             if content
               @out << content.to_s 
             end
-            @out << ((tagname == :begin)? "\\end" : '}')
-            macro(name)
+            macro_end(name, tagname)
           end
           nil
         end
           
         alias method_missing tag
-        
 
         def esc(s)
           s.gsub!(%q{\\},%q{\\\\})

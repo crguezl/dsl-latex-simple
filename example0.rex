@@ -70,4 +70,13 @@ start "document" do
       c 'class Test; end'
     end
   end
+
+  start(%q{tabular}, %q{|c|}) do
+    hline
+    c %q{
+    test1\\\\
+    test2\\\\
+    }
+    hline
+  end
 end
