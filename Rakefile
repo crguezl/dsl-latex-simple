@@ -18,6 +18,7 @@ end
 
 task :html do
   sh "latex2html #{LATEX2HTMLOPTIONS} examples/simple"
+  sh "cp examples/mystyle.css examples/simple/"
 end
 
 task :clean do
