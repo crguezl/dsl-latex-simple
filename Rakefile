@@ -5,21 +5,22 @@ LATEX2HTMLOPTIONS = '-html_version 4.0,latin1,unicode -contents_in_navigation -s
 task :default => :compile
 
 task :compile do
-  sh "ruby -Ilib lib/dsl-latex-simple/simple.rb > simple.tex"
+  sh "ruby -Ilib lib/dsl-latex-simple/simple.rb > examples/simple.tex"
 end
 
 task :c0 do
-  sh "ruby -Ilib bin/rex example0.rex > simple.tex"
+  sh "ruby -Ilib bin/rex examples/example0.rex > examples/simple.tex"
 end
 
 task :dvi do
-  sh "latex simple.tex"
+  sh "latex -output-directory=examples  examples/simple.tex"
 end
 
 task :html do
-  sh "latex2html #{LATEX2HTMLOPTIONS} simple"
+  sh "latex2html #{LATEX2HTMLOPTIONS} examples/simple"
 end
 
 task :clean do
-  sh "rm -f *.log *.dvi *.aux"
+  sh "rm -f examples/*.log examples/*.dvi examples/*.aux"
+  sh "rm -fR examples/simple"
 end

@@ -82,6 +82,6 @@ module Dsl
   end
 end
 if $0 == __FILE__
- Dsl::Latex::Simple.generate('example.rex')
+ Dsl::Latex::Simple.generate('examples/example.rex')
 end
 
