@@ -4,6 +4,8 @@ TODO: LaTeX like Ruby DSL
 
 ## Installation
 
+It needs latex and latex2html installed 
+
 Add this line to your application's Gemfile:
 
     gem 'dsl-latex-simple'
