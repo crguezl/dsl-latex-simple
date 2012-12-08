@@ -1,10 +1,14 @@
 require 'simplabs/highlight'
 
 documentclass ["12pt"], "article"
+usepackage ['pdftex'], %q{graphicx}
 usepackage %q{html}
 usepackage ["fleqn"], %q{amsmath}
 usepackage ["paper=a4paper,dvips,top=1.5cm,left=1.5cm,right=1.5cm,
     foot=1cm,bottom=1.5cm"], "geometry"
+usepackage ['spanish'], %q{babel}    
+usepackage %q{ucs}
+usepackage ['utf8x'], %q{inputenc}
 
 newcommand %q{\lb}, %q{{\langle}}
 
@@ -25,7 +29,7 @@ start "document" do
     c esc %q{ The reconstruction conjecture states that the multiset of unlabeled
     vertex-deleted subgraphs of a graph determines the graph, provided it
     has at least 3 vertices.  A version of the problem was first stated
-    by Stanis\l aw Ulam.  In this paper, we show that the conjecture can
+    by Stanislaw Ulam.  In this paper, we show that the conjecture can
     be proved by elementary methods.  It is only necessary to integrate
     the Lenkle potential of the Broglington manifold over the quantum
     supervacillatory measure in order to reduce the set of possible
@@ -78,5 +82,15 @@ start "document" do
     test2\\\\
     }
     hline
+  end
+
+  input "examples/section.tex"
+
+  start %q{figure}, [ 'htb' ] do
+    start %q{center} do
+      includegraphics ['scale=0.7'], %q{examples/fibonacci.png}
+    end
+    label %q{figure:fibonacci}
+    caption %q{Arbol de llamadas para la función de Fibonacci}
   end
 end

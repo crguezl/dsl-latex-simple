@@ -1,0 +1,81 @@
+\section{Tipos, Clases y Módulos}
+
+
+\begin{verbatim}
+>> obj = [1, {:a => 2}]
+=> [1, {:a=>2}]
+>> obj.class                      # retorna la clase de un objeto
+=> Array
+>> obj.class.superclass           # retorna la superclase de un objeto
+=> Object
+>> obj.instance_of? Object        # determina si obj.class == Object
+=> false
+>> obj.instance_of? Array
+=> true
+>> obj.is_a? Object               # determina si obj es de una subclase de Object
+=> true
+>> obj.is_a? Array
+=> true
+>> obj.kind_of? Object            # kind_of? es un sinónimo de is_a?
+=> true
+>> Array === obj                  # equivalente a obj.is_a? Array
+=> true
+>> Object === obj
+=> true
+>> obj.respond_to? 'each'        # si tiene un método público o protected llamado 'each'
+=> true                          # si se le pasa true como segundo argumento se comprueban
+                                 # también los privados
+>> Array.instance_methods(false) 
+=> ["insert"
+ "sort" "include?" "size" "&" "to_ary" "clear" "yaml_initialize" "shuffle"
+ "replace" "pack" "zip" "flatten!" "to_s" "pop" "pretty_print_cycle" "hash"
+ "cycle" "*" "indices" "nitems" "index" "collect" "+" "compact!"
+ "last" "rassoc" "count" "drop" "delete" "delete_at" "combination" "collect!"
+ "select" "each_index" "-" "flatten" "eql?" "fill" "length" "uniq!"
+ "at" "choice" "reject!" "[]" "take" "inspect" "shift" "compact"
+ "pretty_print" "[]=" "|" "find_index" "slice!" "each" "empty?" "transpose"
+ "<<" "frozen?" "rindex" "map" "reverse_each" "reverse!" "to_a" "push"
+ "uniq" "delete_if" "first" "product" "drop_while" "concat" "reject"
+ "map!" "join" "slice" "indexes" "taguri" "<=>" "assoc" "fetch" "to_yaml"
+ "==" "values_at" "permutation" "take_while" "unshift" "reverse"
+ "sort!" "shuffle!"  "taguri="]
+\end{verbatim}
+
+  \subsection{Antepasados y Módulos}
+  
+Los siguientes métodos sirven para determinar que módulos han sido incluídos 
+y cuales son los ancestros de una clase o módulo:
+\begin{verbatim}
+[~/chapter8ReflectionandMetaprogramming]$ cat ancestryAndModules.rb 
+module A; end
+
+module B; include A; end
+
+class C; include B; end
+
+if __FILE__ == $0
+  puts C < B               # => true: C includes B
+  puts B < A               # => true: B includes A
+  puts C < A               # => true
+  puts Fixnum < Integer    # => true: all fixnums are integers
+  puts Integer <Comparable # => true: integers are comparable
+  puts Integer < Fixnum    # => false: not all integers are fixnums
+  puts (String < Numeric).inspect  # => nil: strings are not numbers
+  
+  puts A.ancestors.inspect         # => [A]
+  puts B.ancestors.inspect         # => [B, A]
+  puts C.ancestors.inspect         # => [C, B, A, Object, Kernel, BasicObject]
+  puts String.ancestors.inspect    # => [String, Comparable, Object, Kernel, BasicObject]
+ 
+  puts C.include?(B)       # => true
+  puts C.include?(A)       # => true
+  puts B.include?(A)       # => true
+  puts A.include?(A)       # => false 
+  puts A.include?(B)       # => false
+
+  puts A.included_modules.inspect  # => []
+  puts B.included_modules.inspect  # => [A]
+  puts C.included_modules.inspect  # => [B, A, Kernel]
+end
+\end{verbatim}
+
