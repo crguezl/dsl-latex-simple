@@ -75,7 +75,6 @@ class Test;
 end
 })
 
-
   start(%q{tabular}, %q{|c|}) do
     hline
     c %q{

@@ -43,3 +43,8 @@ desc "Generates a pygmentize CSS"
 task :css do
   sh "pygmentize -f html -S colorful > examples/colorful.css"
 end
+
+desc "uninstall the gem"
+task :uninstall do
+  sh "gem uninstall dsl-latex-simple"
+end
