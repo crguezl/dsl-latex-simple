@@ -1,3 +1,4 @@
+require 'simplabs/highlight'
 module Dsl
   module Latex
     class Simple
@@ -78,6 +79,20 @@ module Dsl
           x.instance_eval(s, path, 1)
           puts x.out
         end
+
+        def highlight_code(language, code)
+          start %q{rawhtml} do
+            hl = Simplabs::Highlight.highlight(language, code)
+            c "<pre>\n#{hl}\n</pre>\n"
+          end
+
+          start %q{latexonly} do
+            start :lstlisting, %Q{language=#{language}} do
+              c code
+            end
+          end
+        end
+
     end
   end
 end

@@ -1,14 +1,15 @@
-require 'simplabs/highlight'
-
 documentclass ["12pt"], "article"
 usepackage ['pdftex'], %q{graphicx}
 usepackage %q{html}
 usepackage ["fleqn"], %q{amsmath}
-usepackage ["paper=a4paper,dvips,top=1.5cm,left=1.5cm,right=1.5cm,
-    foot=1cm,bottom=1.5cm"], "geometry"
+
+# this package is not compatible with l2h
+#usepackage ["paper=a4paper,dvips,top=1.5cm,left=1.5cm,right=1.5cm, foot=1cm,bottom=1.5cm"], "geometry"
+
 usepackage ['spanish'], %q{babel}    
 usepackage %q{ucs}
 usepackage ['utf8x'], %q{inputenc}
+usepackage 'listings'
 
 newcommand %q{\lb}, %q{{\langle}}
 
@@ -65,15 +66,15 @@ start "document" do
     c &= d,})
   end
 
-  start %q{rawhtml} do
-    c Simplabs::Highlight.highlight(:ruby, 'class Test; end')
-  end
+  highlight_code(:ruby, 
+    %q{
+class Test; 
 
-  start %q{latexonly} do
-    start :verbatim do
-      c 'class Test; end'
-    end
+  def tutu
   end
+end
+})
+
 
   start(%q{tabular}, %q{|c|}) do
     hline

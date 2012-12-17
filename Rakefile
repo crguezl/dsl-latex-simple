@@ -38,3 +38,8 @@ task :clean do
   sh "rm -f examples/*.log examples/*.dvi examples/*.aux examples/*.pdf"
   sh "rm -fR examples/simple"
 end
+
+desc "Generates a pygmentize CSS"
+task :css do
+  sh "pygmentize -f html -S colorful > examples/colorful.css"
+end
